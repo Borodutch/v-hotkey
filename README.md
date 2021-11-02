@@ -22,56 +22,56 @@ $ yarn add v-hotkey
 ## Usage
 
 ```javascript
-import Vue from 'vue'
-import VueHotkey from 'v-hotkey'
+import Vue from "vue";
+import VueHotkey from "v-hotkey";
 
-Vue.use(VueHotkey)
+Vue.use(VueHotkey);
 ```
 
 ```vue
 <template>
-  <span v-hotkey="keymap" v-show="show"> 
+  <span v-hotkey="keymap" v-show="show">
     Press `ctrl + esc` to toggle me! Hold `enter` to hide me!
   </span>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      show: true
-    }
+      show: true,
+    };
   },
   methods: {
-    toggle () {
-      this.show = !this.show
+    toggle() {
+      this.show = !this.show;
     },
-    show () {
-      this.show = true
+    show() {
+      this.show = true;
     },
-    hide () {
-      this.show = false
-    }
+    hide() {
+      this.show = false;
+    },
   },
   computed: {
-    keymap () {
+    keymap() {
       return {
         // 'esc+ctrl' is OK.
-        'ctrl+esc': this.toggle,
-        'enter': {
+        "ctrl+esc": this.toggle,
+        enter: {
           keydown: this.hide,
-          keyup: this.show
-        }
-      }
-    }
-  }
-}
+          keyup: this.show,
+        },
+      };
+    },
+  },
+};
 </script>
 ```
 
 ## Event Handler
 
-- keydown (as default) 
+- keydown (as default)
 - keyup
 
 ## Key Combination
@@ -105,8 +105,23 @@ Add the stop modifier to the directive to stop event propagation.
 ```vue
 <template>
   <div v-hotkey.stop="keymap">
-    <span> Enter characters in editable areas doesn't trigger any hotkeys. </span>
-    <input>
+    <span>
+      Enter characters in editable areas doesn't trigger any hotkeys.
+    </span>
+    <input />
+  </div>
+</template>
+```
+
+### forbidden
+
+Add the forbidden modifier to the directive to allow hotkeys in forbidden elements (i.e. inputs, textfields).
+
+```vue
+<template>
+  <div v-hotkey.forbidden="keymap">
+    <span> Enter characters in editable areas does trigger hotkeys. </span>
+    <input />
   </div>
 </template>
 ```
@@ -119,12 +134,12 @@ This ability to provide their own key code alias for developers who using keyboa
 ### Definition
 
 ```javascript
-import Vue from 'vue'
-import VueHotkey from 'v-hotkey'
+import Vue from "vue";
+import VueHotkey from "v-hotkey";
 
 Vue.use(VueHotkey, {
-  '①': 49 // the key code of character '1'
-})
+  "①": 49, // the key code of character '1'
+});
 ```
 
 ### Template
@@ -133,16 +148,16 @@ Vue.use(VueHotkey, {
 <span v-hotkey="keymap"></span>
 <script>
 export default {
-  foo () {
-    console.log('Hooray!')
+  foo() {
+    console.log("Hooray!");
   },
   computed: {
-    keymap () {
+    keymap() {
       return {
-        '①': foo
-      }
-    }
-  }
-}
+        "①": foo,
+      };
+    },
+  },
+};
 </script>
 ```

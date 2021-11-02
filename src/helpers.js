@@ -1,5 +1,4 @@
-
-const FORBIDDEN_NODES = ['INPUT', 'TEXTAREA', 'SELECT']
+const FORBIDDEN_NODES = ["INPUT", "TEXTAREA", "SELECT"];
 
 /**
  *
@@ -8,29 +7,30 @@ const FORBIDDEN_NODES = ['INPUT', 'TEXTAREA', 'SELECT']
  * @returns {Boolean}
  */
 const areObjectsEqual = (a, b) =>
-  Object.entries(a).every(([key, value]) => b[key] === value)
+  Object.entries(a).every(([key, value]) => b[key] === value);
 
 /**
  *
  * @param {String} combination
  */
-export const splitCombination = combination => {
-  combination = combination.replace(/\s/g, '')
-  combination = combination.includes('numpad+')
-    ? combination.replace('numpad+', 'numpadadd')
-    : combination
-  combination = combination.includes('++')
-    ? combination.replace('++', '+=')
-    : combination
-  return combination.split(/\+{1}/)
-}
+export const splitCombination = (combination) => {
+  combination = combination.replace(/\s/g, "");
+  combination = combination.includes("numpad+")
+    ? combination.replace("numpad+", "numpadadd")
+    : combination;
+  combination = combination.includes("++")
+    ? combination.replace("++", "+=")
+    : combination;
+  return combination.split(/\+{1}/);
+};
 
 /**
  *
  * @param {String} key
  * @returns {String|undefined}
  */
-export const returnCharCode = key => key.length === 1 ? key.charCodeAt(0) : undefined
+export const returnCharCode = (key) =>
+  key.length === 1 ? key.charCodeAt(0) : undefined;
 
 /**
  *
@@ -40,12 +40,13 @@ export const returnCharCode = key => key.length === 1 ? key.charCodeAt(0) : unde
  * @returns {Function|Boolean}
  */
 const getHotkeyCallback = (keyMap, keyCode, eventKeyModifiers) => {
-  const key = keyMap.find(({ code, modifiers }) =>
-    code === keyCode && areObjectsEqual(eventKeyModifiers, modifiers)
-  )
-  if (!key) return false
-  return key.callback
-}
+  const key = keyMap.find(
+    ({ code, modifiers }) =>
+      code === keyCode && areObjectsEqual(eventKeyModifiers, modifiers)
+  );
+  if (!key) return false;
+  return key.callback;
+};
 
 /**
  *
@@ -54,23 +55,22 @@ const getHotkeyCallback = (keyMap, keyCode, eventKeyModifiers) => {
  * @param {Object} modifiers Vue event modifiers
  */
 export const assignKeyHandler = (e, keyMap, modifiers) => {
-  const { keyCode, ctrlKey, altKey, shiftKey, metaKey } = e
-  const eventKeyModifiers = { ctrlKey, altKey, shiftKey, metaKey }
-
+  const { keyCode, ctrlKey, altKey, shiftKey, metaKey } = e;
+  const eventKeyModifiers = { ctrlKey, altKey, shiftKey, metaKey };
   if (modifiers.prevent) {
-    e.preventDefault()
+    e.preventDefault();
   }
 
   if (modifiers.stop) {
-    e.stopPropagation()
+    e.stopPropagation();
   }
 
-  const { nodeName, isContentEditable } = document.activeElement
-  if (isContentEditable) return
-  if (FORBIDDEN_NODES.includes(nodeName)) return
+  const { nodeName, isContentEditable } = document.activeElement;
+  if (isContentEditable) return;
+  if (FORBIDDEN_NODES.includes(nodeName) && !modifiers.forbidden) return;
 
-  const callback = getHotkeyCallback(keyMap, keyCode, eventKeyModifiers)
-  if (!callback) return e
-  e.preventDefault()
-  callback[e.type](e)
-}
+  const callback = getHotkeyCallback(keyMap, keyCode, eventKeyModifiers);
+  if (!callback) return e;
+  e.preventDefault();
+  callback[e.type](e);
+};

@@ -1,5 +1,5 @@
 {
-  "name": "v-hotkey",
+  "name": "@borodutch-labs/v-hotkey",
   "version": "0.8.0",
   "description": "Vue 2.x directive - binding hotkeys for components.",
   "author": {
