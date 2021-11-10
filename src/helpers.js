@@ -71,7 +71,7 @@ export const assignKeyHandler = (e, keyMap, modifiers) => {
       ))
   ) {
     e.preventDefault();
-    callback[e.type](e);
+    // callback[e.type](e);
   }
 
   if (modifiers.stop) {
